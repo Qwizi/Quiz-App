@@ -64,4 +64,5 @@ typings/
 venv/
 __pycache__/
 *.py[cod]
- .idea/
+.idea/
+db.sqlite3
