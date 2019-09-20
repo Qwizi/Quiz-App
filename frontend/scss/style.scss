@@ -3,6 +3,14 @@ $light: #a4a4a4;
 $dark:#494949;
 $text: #fff;
 
+$footer-height: 50px;
+
+@mixin flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -30,14 +38,13 @@ body {
   font-family: 'Roboto Mono', monospace;
   background-color: $bg-color;
   color: $text;
-  display: flex;
-  flex-direction: column;
 }
 
 .wrapper {
-  flex: 1 0 auto;
+  max-width: 1200px;
   margin: auto;
-  min-width: 1200px;
+  margin-bottom: -$footer-height;
+  min-height: 100%;
 }
 
 .page-header {
@@ -50,11 +57,13 @@ body {
   background-color: $light;
 }
 
+.page-footer,
+.push {
+  min-height: $footer-height;
+}
+
 .page-footer {
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex;
   padding: 10px;
   background-color: $dark;
 }
