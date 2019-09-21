@@ -1,5 +1,4 @@
 from django.db import models
-from user.models import User
 
 
 class Answer(models.Model):
@@ -24,9 +23,3 @@ class Quiz(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class UserAnswer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
