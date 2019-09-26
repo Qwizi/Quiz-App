@@ -22,6 +22,29 @@ h204 = status.HTTP_204_NO_CONTENT
 
 
 class QuizViewSet(viewsets.ViewSet):
+    serializer_class = QuizSerializer
+
+    """
+    List quizzes
+    /quiz/
+    """
+    def list(self, request):
+        quizzes = Quiz.objects.all()
+        serializer = self.serializer_class(quizzes, many=True)
+        return Response(serializer.data)
+
+    """
+    Get quiz info
+    /quiz/{quiz_pk}/
+    """
+    def retrieve(self, request, pk=None):
+        queryset = Quiz.objects.all()
+        quiz = get_object_or_404(queryset, pk=pk)
+        serializer = self.serializer_class(quiz)
+        return Response(serializer.data)
+
+"""
+class QuizViewSet(viewsets.ViewSet):
     serializer_class = QuizSerializerWithoutQuestions
 
     def list(self, request):
@@ -59,7 +82,6 @@ class QuizViewSet(viewsets.ViewSet):
             else:
                 return Response(serializer.errors, status=h400)
 
-    """
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -71,9 +93,7 @@ class QuizViewSet(viewsets.ViewSet):
         quiz = Quiz.objects.get(pk=pk)
         quiz.delete()
         return Response(status=h204)
-    """
-
-
+        
 class QuestionViewSet(viewsets.ViewSet):
     serializer_class = QuestionSerializerWithoutAnswers
 
@@ -101,3 +121,4 @@ class AnswerViewSet(viewsets.ViewSet):
         answers = question.answers.all()
         serializer = self.serializer_class(answers, many=True)
         return Response(serializer.data)
+"""

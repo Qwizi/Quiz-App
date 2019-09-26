@@ -3,26 +3,22 @@ from rest_framework_nested import routers
 
 from .views import (
     UserViewSet,
-    UserQuizViewSet,
-    UserQuestionViewSet,
-    UserAnswerViewSet
+    QuizAnswerViewSet,
+    UserQuizAnswerViewSet
 )
 
 user_router = routers.SimpleRouter()
 user_router.register('user', UserViewSet, base_name='user')
+user_router.register('quiz-answer', QuizAnswerViewSet, base_name='quiz-answer')
 
-quiz_router = routers.NestedSimpleRouter(user_router, 'user', lookup='user')
-quiz_router.register('quiz', UserQuizViewSet, base_name='quiz')
-
-question_router = routers.NestedSimpleRouter(quiz_router, 'quiz', lookup='quiz')
-question_router.register('question', UserQuestionViewSet, base_name='question')
-
-answer_router = routers.NestedSimpleRouter(question_router, 'question', lookup='question')
-answer_router.register('answer', UserAnswerViewSet, base_name='answer')
+user_quiz_answer_router = routers.NestedSimpleRouter(user_router, 'user', lookup='user')
+user_quiz_answer_router.register('quiz-answer', UserQuizAnswerViewSet, base_name='user-quiz-answer')
 
 urlpatterns = [
     path('', include(user_router.urls)),
-    path('', include(quiz_router.urls)),
-    path('', include(question_router.urls)),
-    path('', include(answer_router.urls))
+    path('', include(user_quiz_answer_router.urls))
+    # path('', include(user_quiz_answer.urls))
+    # path('', include(quiz_router.urls)),
+    # path('', include(question_router.urls)),
+    # path('', include(answer_router.urls))
 ]
