@@ -13,3 +13,9 @@ class UserAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAnswer
         fields = '__all__'
+
+
+class TopUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
