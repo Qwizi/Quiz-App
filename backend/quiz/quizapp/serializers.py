@@ -15,7 +15,6 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = ['id', 'content', 'answers', 'correct_answer']
 
-
 class QuizSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True)
 
