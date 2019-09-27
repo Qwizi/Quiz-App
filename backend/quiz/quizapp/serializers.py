@@ -15,13 +15,6 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = ['id', 'content', 'answers', 'correct_answer']
 
-
-class QuestionSerializerWithoutAnswers(serializers.ModelSerializer):
-    class Meta:
-        model = Question
-        fields = ['id', 'content']
-
-
 class QuizSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True)
 
@@ -34,3 +27,20 @@ class QuizSerializerWithoutQuestions(serializers.ModelSerializer):
     class Meta:
         model = Quiz
         fields = ['id', 'title']
+
+
+class UserQuizAnswerSerializer(serializers.ModelSerializer):
+    questions = QuestionSerializer(many=True, read_only=True)
+    answers = AnswerSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Quiz
+        fields = ['title', 'questions', 'answers']
+
+
+class QuestionWithOnlyIdAndAnswersSerializer(serializers.ModelSerializer):
+    answer = AnswerSerializer(read_only=True)
+
+    class Meta:
+        model = Question
+        fields = ['id', 'answer']
