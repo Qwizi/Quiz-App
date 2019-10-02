@@ -15,7 +15,7 @@
         </label>
         <button class="btn btn--ok" @click="handleClick">OK</button>
       </form>
-      <div class="header" v-else>Witaj, {{isLogged}}</div>
+      <div class="header" v-else>Witaj, {{nick}}</div>
     </div>
   </main>
 </template>
@@ -26,32 +26,20 @@ import axios from "axios";
 export default {
   data() {
     return {
-      nick: "",
-      isLogged: localStorage.getItem("name")
+      nick: localStorage.getItem("name") ? localStorage.getItem("name") : "",
+      isLogged: !!localStorage.getItem("name"),
     };
   },
   methods: {
-    isUserLogged: function(e) {
-      if (localStorage.getItem("name")) {
-        this.isLogged = true;
-        this.nick = localStorage.getItem("name");
-        return true;
-      } else {
-        this.isLogged = false;
-        return false;
-      }
-    },
-
-    userAddedOK: function(e) {
+    userAddedOK: function() {
       localStorage.setItem("name", this.nick);
       this.isLogged = true;
-      console.log(this.isLogged);
     },
 
     handleClick: function(e) {
       e.preventDefault();
 
-      if (!this.isUserLogged()) {
+      if (!this.isLogged) {
         axios
           .post(`http://localhost:8000/user/`, { name: this.nick })
           .then(res => {
