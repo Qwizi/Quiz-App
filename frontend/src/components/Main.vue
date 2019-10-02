@@ -1,7 +1,7 @@
 <template>
   <main class="main">
     <div class="welcome">
-      <form class="nick-form" v-if='!isUserLogged()'>
+      <form class="nick-form" v-if="!isLogged">
         <label for="nick" class="label">
           Wpisz swój nick:
           <input
@@ -25,20 +25,25 @@ import axios from "axios";
 export default {
   data() {
     return {
-      nick: ""
+      nick: "",
+      isLogged: localStorage.getItem("name")
     };
   },
   methods: {
     isUserLogged: function(e) {
       if (localStorage.getItem("name")) {
-        return 1;
+        this.isLogged = true;
+        return true;
       } else {
-        return 0;
+        this.isLogged = false;
+        return false;
       }
     },
 
     userAddedOK: function(e) {
       localStorage.setItem("name", this.nick);
+      this.isLogged = true;
+      console.log(this.isLogged);
     },
 
     handleClick: function(e) {
