@@ -1,6 +1,13 @@
+<template>
+  <div id="app">
+    <router-view />
+  </div>
+</template>
+
+<style lang="scss">
 $bg-color: #757575;
 $light: #a4a4a4;
-$dark:#494949;
+$dark: #494949;
 $text: #fff;
 
 $footer-height: 50px;
@@ -23,21 +30,16 @@ html {
   -moz-osx-smoothing: grayscale;
 }
 
-html,
 body {
-  height: 100%;
+  margin: 0;
+  font-family: "Roboto Mono", monospace;
+  background-color: $bg-color;
+  color: $text;
 }
 
 h1 {
   margin: 0;
   padding: 0;
-}
-
-body {
-  margin: 0;
-  font-family: 'Roboto Mono', monospace;
-  background-color: $bg-color;
-  color: $text;
 }
 
 label {
@@ -48,8 +50,9 @@ label {
 .wrapper {
   max-width: 1200px;
   margin: auto;
-  margin-bottom: -$footer-height;
   min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .page-header {
@@ -60,6 +63,7 @@ label {
 .main {
   padding: 10px;
   background-color: $light;
+  flex: 1;
 }
 
 .welcome {
@@ -87,8 +91,7 @@ label {
   cursor: pointer;
 }
 
-.page-footer,
-.push {
+.page-footer {
   min-height: $footer-height;
 }
 
@@ -97,3 +100,4 @@ label {
   padding: 10px;
   background-color: $dark;
 }
+</style>
