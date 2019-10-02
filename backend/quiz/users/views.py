@@ -127,11 +127,15 @@ class TopUserViewSet(viewsets.ViewSet):
         user_data = []
         user_list = User.objects.all()
         for user in user_list:
-            user_data.append({
-                'name': user.name,
-                'answers': UserAnswer.objects.filter(user=user).count()
-            })
+            if UserAnswer.objects.filter(user=user).count() >= 1:
+                user_data.append({
+                    'name': user.name,
+                    'answers': UserAnswer.objects.filter(user=user).count()
+                })
 
-        newlist = sorted(user_data, key=lambda k: k['answers'], reverse=True)
-        serializer = TopUserSerializer(newlist, many=True)
-        return Response(serializer.data)
+        sorted_user_list = sorted(user_data, key=lambda k: k['answers'], reverse=True)
+        serializer = TopUserSerializer(sorted_user_list[:10], many=True)
+        if not serializer.data:
+            return Response({'detail': 'Not found.'}, status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(serializer.data)
