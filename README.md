@@ -3,7 +3,7 @@
 # Endpoints
 
 * `POST /user/` create user
-* `POST /quiz-answer` create user quiz answer
+* `POST /quiz-answer/` create user quiz answer
 
 * `GET /user/` list users
 * `GET /user/<user_id>/` get user details
