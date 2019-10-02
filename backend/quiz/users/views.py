@@ -124,6 +124,14 @@ class TopUserViewSet(viewsets.ViewSet):
     Top users
     """
     def list(self, request):
-        users = User.objects.all()
-        serializer = TopUserSerializer(users, many=True)
+        user_data = []
+        user_list = User.objects.all()
+        for user in user_list:
+            user_data.append({
+                'name': user.name,
+                'answers': UserAnswer.objects.filter(user=user).count()
+            })
+
+        newlist = sorted(user_data, key=lambda k: k['answers'], reverse=True)
+        serializer = TopUserSerializer(newlist, many=True)
         return Response(serializer.data)
