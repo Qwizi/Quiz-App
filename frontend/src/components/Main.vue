@@ -15,6 +15,7 @@
         </label>
         <button class="btn btn--ok" @click="handleClick">OK</button>
       </form>
+      <div class="header" v-else>Witaj, {{isLogged}}</div>
     </div>
   </main>
 </template>
@@ -33,6 +34,7 @@ export default {
     isUserLogged: function(e) {
       if (localStorage.getItem("name")) {
         this.isLogged = true;
+        this.nick = localStorage.getItem("name");
         return true;
       } else {
         this.isLogged = false;
