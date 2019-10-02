@@ -26,21 +26,11 @@ export default {
   data() {
     return {
       nick: "",
-      isLogged: localStorage.getItem("name")
+      isLogged: !!localStorage.getItem("name"),
     };
   },
   methods: {
-    isUserLogged: function(e) {
-      if (localStorage.getItem("name")) {
-        this.isLogged = true;
-        return true;
-      } else {
-        this.isLogged = false;
-        return false;
-      }
-    },
-
-    userAddedOK: function(e) {
+    userAddedOK: function() {
       localStorage.setItem("name", this.nick);
       this.isLogged = true;
       console.log(this.isLogged);
@@ -49,7 +39,7 @@ export default {
     handleClick: function(e) {
       e.preventDefault();
 
-      if (!this.isUserLogged()) {
+      if (!this.isLogged) {
         axios
           .post(`http://localhost:8000/user/`, { name: this.nick })
           .then(res => {
