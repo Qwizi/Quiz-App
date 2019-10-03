@@ -16,12 +16,14 @@
         <button class="btn btn--ok" @click="handleClick">OK</button>
       </form>
       <div class="header" v-else>Witaj, {{nick}}</div>
+      <QuizList />
     </div>
   </main>
 </template>
 
 <script>
 import axios from "axios";
+import QuizList from "./QuizList";
 
 export default {
   data() {
@@ -35,7 +37,6 @@ export default {
       localStorage.setItem("name", this.nick);
       this.isLogged = true;
     },
-
     handleClick: function(e) {
       e.preventDefault();
 
@@ -52,6 +53,9 @@ export default {
           .catch(error => console.log(error));
       }
     }
+  },
+  components: {
+    QuizList
   }
 };
 </script>
