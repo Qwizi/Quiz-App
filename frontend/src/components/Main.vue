@@ -2,20 +2,20 @@
   <main class="main">
     <div class="welcome">
       <form class="nick-form" v-if="!isLogged">
-        <label for="nick" class="label">
+        <label for="name" class="label">
           Wpisz swój nick:
           <input
             type="text"
-            id="nick"
-            name="nick"
-            placeholder="Nick"
+            id="name"
+            name="name"
+            placeholder="Name"
             class="input"
-            v-model="nick"
+            v-model="name"
           />
         </label>
-        <button class="btn btn--ok" @click="handleClick">OK</button>
+        <button class="btn btn--ok" @click="handleNickFormClick">OK</button>
       </form>
-      <div class="header" v-else>Witaj, {{nick}}</div>
+      <div class="header" v-else>Witaj, {{name}}</div>
       <QuizList />
     </div>
   </main>
@@ -28,27 +28,23 @@ import QuizList from "./QuizList";
 export default {
   data() {
     return {
-      nick: localStorage.getItem("name") ? localStorage.getItem("name") : "",
+      name: localStorage.getItem("name") ? localStorage.getItem("name") : "",
       isLogged: !!localStorage.getItem("name"),
     };
   },
   methods: {
-    userAddedOK: function() {
-      localStorage.setItem("name", this.nick);
+    setName: function(value) {
+      localStorage.setItem("name", value);
       this.isLogged = true;
     },
-    handleClick: function(e) {
+    handleNickFormClick: function(e) {
       e.preventDefault();
 
       if (!this.isLogged) {
         axios
-          .post(`http://localhost:8000/user/`, { name: this.nick })
+          .post(`http://localhost:8000/user/`, { name: this.name })
           .then(res => {
-            console.log(JSON.stringify(res));
-            return res;
-          })
-          .then(res => {
-            this.userAddedOK();
+            this.setName(res.data.name);
           })
           .catch(error => console.log(error));
       }
